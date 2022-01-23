@@ -66,7 +66,9 @@ Function Remove-Object {
 	Return $local:Results
 }
 
-[PSCustomObject] $local:OutlookProfiles  = ((Get-ChildItem ("Registry::HKEY_USERS\{0}\Software\Microsoft\Office\16.0\Outlook\Profiles" -f 'S-1-12-1-381062856-1325361667-2852475563-2715136507') -Recurse ))
+$script:sid = [System.Security.Principal.WindowsIdentity]::GetCurrent().User.Value
+
+[PSCustomObject] $local:OutlookProfiles  = ((Get-ChildItem ("Registry::HKEY_USERS\{0}\Software\Microsoft\Office\16.0\Outlook\Profiles" -f $script:sid) -Recurse ))
 
 # Local variables
 [string] $local:FoundAddress = [string]::Empty
